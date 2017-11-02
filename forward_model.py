@@ -103,7 +103,7 @@ class DCGAN(object):
     inputs = self.inputs
 
     self.z = tf.placeholder(
-      tf.float32, [None, self.z_dim], name='z')
+      tf.float32, [64, self.z_dim], name='z')
     self.z_sum = histogram_summary("z", self.z)
 
     self.G                  = self.generator(self.z, self.y)
@@ -142,9 +142,6 @@ class DCGAN(object):
     self.g_vars = [var for var in t_vars if 'g_' in var.name]
 
     self.saver = tf.train.Saver()
-
-
-  
 
   def train(self, config):
     d_optim = tf.train.AdamOptimizer(config.learning_rate, beta1=config.beta1) \
