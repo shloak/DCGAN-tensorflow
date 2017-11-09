@@ -11,8 +11,6 @@ from utils import *
 import tensorflow as tf
 import matplotlib.pyplot as plt
 
-%matplotlib inline
-
 flags = tf.app.flags
 flags.DEFINE_integer("epoch", 25, "Epoch to train [25]")
 flags.DEFINE_float("learning_rate", 0.0002, "Learning rate of for adam [0.0002]")
@@ -93,7 +91,7 @@ z_0 = np.random.uniform(-0.5, 0.5, size=(64 , 100))
 
 prev2 = 9999999999
 prev1 = 999999999
-rate = 0.002
+rate = 0.0001
 count = 0
 
 errs = []
