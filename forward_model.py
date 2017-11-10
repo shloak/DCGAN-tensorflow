@@ -102,8 +102,12 @@ class DCGAN(object):
 
     inputs = self.inputs
 
-    self.z = tf.placeholder(
-      tf.float32, [64, self.z_dim], name='z')
+    #self.z = tf.placeholder(
+    #  tf.float32, [64, self.z_dim], name='z')
+
+    self.z = tf.Variable(
+      tf.random_uniform([64, self.z_dim], -1, 1), name='z')
+
     self.z_sum = histogram_summary("z", self.z)
 
     self.G                  = self.generator(self.z, self.y)
@@ -510,10 +514,19 @@ class DCGAN(object):
     print(" [*] Reading checkpoints...")
     checkpoint_dir = os.path.join(checkpoint_dir, self.model_dir)
 
+
+
+    for va in tf.all_variables():
+        print(va.name)
+
+
+    restore_var = [va for va in tf.all_variables() if va.name not in ['z:0', 'beta1_power:0', 'beta2_power:0', 'z/Adam:0', 'z/Adam_1:0', 'z/Momentum:0']]
+    sav = tf.train.Saver(var_list=restore_var)
+
     ckpt = tf.train.get_checkpoint_state(checkpoint_dir)
     if ckpt and ckpt.model_checkpoint_path:
       ckpt_name = os.path.basename(ckpt.model_checkpoint_path)
-      self.saver.restore(self.sess, os.path.join(checkpoint_dir, ckpt_name))
+      sav.restore(self.sess, os.path.join(checkpoint_dir, ckpt_name))
       counter = int(next(re.finditer("(\d+)(?!.*\d)",ckpt_name)).group(0))
       print(" [*] Success to read {}".format(ckpt_name))
       return True, counter
