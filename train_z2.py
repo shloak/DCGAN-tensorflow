@@ -61,16 +61,13 @@ with tf.Session(config=run_config) as sess:
       checkpoint_dir=FLAGS.checkpoint_dir,
       sample_dir=FLAGS.sample_dir)
 
-show_all_variables()
+  show_all_variables()
 
-if not dcgan.load(FLAGS.checkpoint_dir)[0]:
-  raise Exception("[!] Train a model first, then run test mode")
-
-data = glob("./data/celebA/*.jpg")
+  data = glob("./data/celebA/*.jpg")
 
 
-sample_files = data[0:64] #change to 64 images
-sample = [get_image(sample_file, input_height=dcgan.input_height,
+  sample_files = data[0:64] #change to 64 images
+  sample = [get_image(sample_file, input_height=dcgan.input_height,
                     input_width=dcgan.input_width,
                     resize_height=dcgan.output_height,
                     resize_width=dcgan.output_width,
