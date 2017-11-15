@@ -9,6 +9,7 @@ web/js/gen_layers.js
 
 # checkpoint
 checkpoint
+.ipynb_checkpoints
 
 # trash
 .dropbox
